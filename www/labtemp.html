@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -15,6 +16,7 @@
 	<div id="ping" style="padding:4px;"></div>
 
 	<script type="text/javascript">
+
 		function createArray(csvData) {
 			var result = new Object();
 			result.labTemp = [];
@@ -46,7 +48,7 @@
 				xhr.onload = function () {
 					resolve(createArray(xhr.responseText));
 				};
-				xhr.open("get", "oledclockservice.csv", true);
+				xhr.open("get", "./oledclockservice.csv", true);
 				xhr.send(null);
 			});
 		}
