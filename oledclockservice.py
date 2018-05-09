@@ -34,7 +34,6 @@
 import RPi.GPIO as GPIO
 import time
 import datetime
-import pytz
 # import locale
 import threading
 import smbus
@@ -194,8 +193,8 @@ def get_chart_information():
 
 
 def get_clock_csv():
-    now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
-    return now.strftime("%Y/%m/%d %H:%M:%S %z")
+    now = datetime.datetime.now()
+    return now.strftime("%Y/%m/%d %H:%M:%S")
 
 
 # ***************************
