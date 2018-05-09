@@ -1,144 +1,118 @@
 <html>
+
 <head>
-    <title> Environmental measurement of my LAB</title>
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-    <!--
-	    var csvArray1 = new Array();
-	    var csvArray2 = new Array();
-	    var csvArray3 = new Array();
-	    var csvArray4 = new Array();
-	    csvArray1[0] = ['', 'Lab Temp', 'CPU temp'];
-	    csvArray2[0] = ['', 'Humidity', 'Pressure'];
-	    csvArray3[0] = ['', 'Download', 'Upload'];
-	    csvArray4[0] = ['', 'Ping'];
-	    function getCSVFile() {
-	        var xhr = new XMLHttpRequest();
-	        xhr.onload = function() {
-	            createArray(xhr.responseText);
-	        };
-	        xhr.open("get", "oledclockservice.csv", true);
-	        xhr.send(null);
-	    }
-
-	    getCSVFile();
-
-	    function createXMLHttpRequest() {
-	        var XMLhttpObject = null;
-	        XMLhttpObject = new XMLHttpRequest();
-	        return XMLhttpObject;
-	    }
-
-	    function createArray(csvData) {
-	        var tempArray = csvData.split("\n");
-	        for(var i = 0; i < tempArray.length - 1; i++) {
-	            var temp = tempArray[i].split(",")
-	            //console.log(temp);
-	            csvArray1[i + 1] = [temp[0], temp[1]|0, temp[4]|0];
-	        	//console.log(csvArray1);
-	            csvArray2[i + 1] = [temp[0], temp[2]|0, temp[3]|0];
-	        	//console.log(csvArray2);
-	            csvArray3[i + 1] = [temp[0], temp[5]|0, temp[6]|0];
-	        	//console.log(csvArray3);
-	            csvArray4[i + 1] = [temp[0], temp[7]|0];
-	        	//console.log(csvArray4);
-	        }
-	    }
-
-	    google.load("visualization", "1", {packages:["corechart"]});
-	    var resizable_chart1;
-	    var resizable_options1;
-	    var resizable_data1;
-	    var resizable_chart2;
-	    var resizable_options2;
-	    var resizable_data2;
-	    var resizable_chart3;
-	    var resizable_options3;
-	    var resizable_data3;
-	    var resizable_chart4;
-	    var resizable_options4;
-	    var resizable_data4;
-
-	    google.setOnLoadCallback(
-	        function () {
-	            resizable_data1 = google.visualization.arrayToDataTable(csvArray1);
-	            resizable_options1 = {
-	                title: 'Lab Temperature and CPU Temp',
-	                series:[
-	                    {targetAxisIndex:1},
-	                    {targetAxisIndex:0},
-	                ],
-                    vAxes: {
-                        0: {title: "CPU Temp('C)"},
-                        1: {title: "Lab Temp('C)"},
-                    },
-	                legend:{position:'top'},
-	                colors:['darkorange','tan'],
-	                pointSize: 2
-	            };
-	            resizable_chart1 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart1'));
-	            resizable_chart1.draw(resizable_data1, resizable_options1);
-
-	            resizable_data2 = google.visualization.arrayToDataTable(csvArray2);
-	            resizable_options2 = {
-	                title: 'Lab Atmospheric Pressure and Humidity',
-	                series:{
-	                    0: {targetAxisIndex:1},
-	                    1: {targetAxisIndex:0},
-	                },
-                    vAxes: {
-                        0: {title: 'hPa'},
-                        1: {title: '%'},
-                    },
-	                legend:{position:'top'},
-	                colors:['lightseagreen','deepskyblue'],
-	                pointSize: 2
-	            };
-	            resizable_chart2 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart2'));
-	            resizable_chart2.draw(resizable_data2, resizable_options2);
-
-	            resizable_data3 = google.visualization.arrayToDataTable(csvArray3);
-	            resizable_options3 = {
-	                title: 'Lab Internet Speed Test',
-	                series:[
-	                    {targetAxisIndex:1},
-	                    {targetAxisIndex:0},
-	                ],
-                    vAxes: {
-                        0: {title: 'Upload(Mbps)'},
-                        1: {title: 'Download(Mbps)'},
-                    },
-	                legend:{position:'top'},
-	                colors:['DeepPink','RoyalBlue'],
-	                pointSize: 2
-	            };
-	            resizable_chart3 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart3'));
-	            resizable_chart3.draw(resizable_data3, resizable_options3);
-
-	            resizable_data4 = google.visualization.arrayToDataTable(csvArray4);
-	            resizable_options4 = {
-	                title: 'Lab Internet Ping Test',
-	                series:[
-	                    {targetAxisIndex:0},
-	                ],
-                    vAxes: {
-                        0: {title: 'Ping(ms)'},
-                    },
-	                legend:{position:'top'},
-	                colors:['lightseagreen'],
-	                pointSize: 2
-	            };
-	            resizable_chart4 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart4'));
-	            resizable_chart4.draw(resizable_data4, resizable_options4);
-	        }
-	    );
-    -->
-    </script>
+	<title>Laboratory information</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- <script src="//code.highcharts.com/highcharts.js"></script> -->
+	<script src="https://code.highcharts.com/stock/highstock.js"></script>
 </head>
-<body onresize="resizable_chart1.draw(resizable_data1, resizable_options1);resizable_chart2.draw(resizable_data2, resizable_options2);resizable_chart3.draw(resizable_data3, resizable_options3);resizable_chart4.draw(resizable_data4, resizable_options4);">
-    <div id='gct_resizable_chart1' style="width=100%; height=500pt"></div>
-    <div id='gct_resizable_chart2' style="width=100%; height=500pt"></div>
-    <div id='gct_resizable_chart3' style="width=100%; height=500pt"></div>
-    <div id='gct_resizable_chart4' style="width=100%; height=500pt"></div>
+
+<body style="background-color:#4CAF50;">
+	<div id="temp-cputmp" style="padding:4px;"></div>
+	<div id="hum-press" style="padding:4px;"></div>
+	<div id="down-up" style="padding:4px;"></div>
+	<div id="ping" style="padding:4px;"></div>
+
+	<script type="text/javascript">
+		function createArray(csvData) {
+			var result = new Object();
+			result.labTemp = [];
+			result.labHumidity = [];
+			result.labPressure = [];
+			result.cpuTemp = [];
+			result.labNetDownload = [];
+			result.labNetUpload = [];
+			result.labPing = [];
+
+			var tempArray = csvData.split("\n");
+			for (var i = 0; i < tempArray.length - 1; i++) {
+				var temp = tempArray[i].split(",")
+				result.labTemp[i] = [Date.parse(temp[0]), Number(temp[1])];
+				result.labHumidity[i] = [Date.parse(temp[0]), Number(temp[2])];
+				result.labPressure[i] = [Date.parse(temp[0]), Number(temp[3])];
+				result.cpuTemp[i] = [Date.parse(temp[0]), Number(temp[4])];
+				result.labNetDownload[i] = [Date.parse(temp[0]), Number(temp[5])];
+				result.labNetUpload[i] = [Date.parse(temp[0]), Number(temp[6])];
+				result.labPing[i] = [Date.parse(temp[0]), Number(temp[7])];
+			}
+
+			return result;
+		}
+
+		function getCSVFile() {
+			return new Promise(function (resolve) {
+				var xhr = new XMLHttpRequest();
+				xhr.onload = function () {
+					resolve(createArray(xhr.responseText));
+				};
+				xhr.open("get", "oledclockservice.csv", true);
+				xhr.send(null);
+			});
+		}
+
+		function draw() {
+			var options_temp_cputmp = {
+				chart: { renderTo: 'temp-cputmp', zoomType: 'xy' },
+				title: { text: 'Lab Temperature and CPU Temp', floating: true },
+				xAxis: { title: null, type: 'datetime', scrollbar: { enabled: true } },
+				yAxis: [
+					{ title: { text: "Lab Temp('C)" } },
+					{ title: { text: "CPU Temp('C)" }, opposite: true, scrollbar: { enabled: true } }
+				],
+				credits: { enabled: false }
+			};
+			var options_hum_press = {
+				chart: { renderTo: 'hum-press', zoomType: 'xy' },
+				title: { text: 'Lab Atmospheric Pressure and Humidity', floating: true },
+				xAxis: { title: null, type: 'datetime', scrollbar: { enabled: true } },
+				yAxis: [
+					{ title: { text: "Humidity(%)" } },
+					{ title: { text: "Pressure(hpa)" }, opposite: true, scrollbar: { enabled: true } }
+				],
+				credits: { enabled: false }
+			};
+			var options_down_up = {
+				chart: { renderTo: 'down-up', zoomType: 'xy' },
+				title: { text: 'Lab Internet Speed Test', floating: true },
+				xAxis: { title: null, type: 'datetime', scrollbar: { enabled: true } },
+				yAxis: [
+					{ title: { text: "Download(Mbps)" } },
+					{ title: { text: "Upload(Mbps)" }, opposite: true, scrollbar: { enabled: true } }
+				],
+				credits: { enabled: false }
+			};
+			var options_ping = {
+				chart: { renderTo: 'ping', zoomType: 'xy' },
+				title: { text: 'Lab Internet Ping Test', floating: true },
+				xAxis: { title: null, type: 'datetime', scrollbar: { enabled: true } },
+				yAxis: { title: { text: "Ping(ms)" }, scrollbar: { enabled: true } },
+				credits: { enabled: false }
+			};
+
+			getCSVFile().then(function (csv) {
+				options_temp_cputmp['series'] = [
+					{ name: "Lab Temp('C)", data: csv.labTemp, color: '#CB4829', yAxis: 0 },
+					{ name: "CPU Temp('C)", data: csv.cpuTemp, color: '#DFD238', yAxis: 1 }
+				];
+				var chart1 = new Highcharts.Chart(options_temp_cputmp);
+				options_hum_press['series'] = [
+					{ name: "Humidity(%)", data: csv.labHumidity, color: '#009453', yAxis: 0 },
+					{ name: "Pressure(hpa)", data: csv.labPressure, color: '#0099CE', yAxis: 1 }
+				];
+				var chart2 = new Highcharts.Chart(options_hum_press);
+				options_down_up['series'] = [
+					{ name: "Download(Mbps)", data: csv.labNetDownload, color: '#423885', yAxis: 0 },
+					{ name: "Upload(Mbps)", data: csv.labNetUpload, color: '#CA4684', yAxis: 1 }
+				];
+				var chart3 = new Highcharts.Chart(options_down_up);
+				options_ping['series'] = [{ name: "Ping(ms)", data: csv.labPing, color: '#CA475C' }];
+				var chart4 = new Highcharts.Chart(options_ping);
+			});
+		};
+
+		document.body.onload = draw();
+	</script>
 </body>
+
 </html>
