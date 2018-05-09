@@ -7,7 +7,7 @@
 #                 Temperature and humidiry sensor BME280
 #                   datasheet (http://akizukidenshi.com/download/ds/bosch/BST-BME280_DS001-10.pdf)
 #                 WinSTAR OLED Display 20x4 WEH002004A (using controller WS0010)
-#                   datasheets (http://blog.digit-parts.com/pdf/ws0010.pdf)
+#                   datasheet (http://blog.digit-parts.com/pdf/ws0010.pdf)
 
 
 # ***************************
@@ -325,9 +325,6 @@ def initialize_winstar_oled():
     set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)
 
     # Function set
-    # set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # 0 0 1 DL (4bit mode)
-    # set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # N F FT1 FT0 (1line, 5x8dot, english-russian font)
-    # set4_bit(1, 0, 0, 0, WRITE_MODE_CMD) # Write Data
     set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # start?
     set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # 0 0 1 DL (4bit mode)
     set4_bit(1, 0, 0, 0, WRITE_MODE_CMD) # N F FT1 FT0 (2line?, 5x8dot, english-japanese font)
