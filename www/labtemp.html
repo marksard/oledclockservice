@@ -30,13 +30,15 @@
 			var tempArray = csvData.split("\n");
 			for (var i = 0; i < tempArray.length - 1; i++) {
 				var temp = tempArray[i].split(",")
-				result.labTemp[i] = [Date.parse(temp[0]), Number(temp[1])];
-				result.labHumidity[i] = [Date.parse(temp[0]), Number(temp[2])];
-				result.labPressure[i] = [Date.parse(temp[0]), Number(temp[3])];
-				result.cpuTemp[i] = [Date.parse(temp[0]), Number(temp[4])];
-				result.labNetDownload[i] = [Date.parse(temp[0]), Number(temp[5])];
-				result.labNetUpload[i] = [Date.parse(temp[0]), Number(temp[6])];
-				result.labPing[i] = [Date.parse(temp[0]), Number(temp[7])];
+				var dayDateAllay = temp[0].replace("'","").split(/[// :]/);
+				var date = new Date(dayDateAllay[0], dayDateAllay[1]-1, dayDateAllay[2], dayDateAllay[3], dayDateAllay[4], dayDateAllay[5]);
+				result.labTemp[i] = [Number(date), Number(temp[1])];
+				result.labHumidity[i] = [Number(date), Number(temp[2])];
+				result.labPressure[i] = [Number(date), Number(temp[3])];
+				result.cpuTemp[i] = [Number(date), Number(temp[4])];
+				result.labNetDownload[i] = [Number(date), Number(temp[5])];
+				result.labNetUpload[i] = [Number(date), Number(temp[6])];
+				result.labPing[i] = [Number(date), Number(temp[7])];
 			}
 
 			return result;
