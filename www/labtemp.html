@@ -1,0 +1,144 @@
+<html>
+<head>
+    <title> Environmental measurement of my LAB</title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    <!--
+	    var csvArray1 = new Array();
+	    var csvArray2 = new Array();
+	    var csvArray3 = new Array();
+	    var csvArray4 = new Array();
+	    csvArray1[0] = ['', 'Lab Temp', 'CPU temp'];
+	    csvArray2[0] = ['', 'Humidity', 'Pressure'];
+	    csvArray3[0] = ['', 'Download', 'Upload'];
+	    csvArray4[0] = ['', 'Ping'];
+	    function getCSVFile() {
+	        var xhr = new XMLHttpRequest();
+	        xhr.onload = function() {
+	            createArray(xhr.responseText);
+	        };
+	        xhr.open("get", "oledclockservice.csv", true);
+	        xhr.send(null);
+	    }
+
+	    getCSVFile();
+
+	    function createXMLHttpRequest() {
+	        var XMLhttpObject = null;
+	        XMLhttpObject = new XMLHttpRequest();
+	        return XMLhttpObject;
+	    }
+
+	    function createArray(csvData) {
+	        var tempArray = csvData.split("\n");
+	        for(var i = 0; i < tempArray.length - 1; i++) {
+	            var temp = tempArray[i].split(",")
+	            //console.log(temp);
+	            csvArray1[i + 1] = [temp[0], temp[1]|0, temp[4]|0];
+	        	//console.log(csvArray1);
+	            csvArray2[i + 1] = [temp[0], temp[2]|0, temp[3]|0];
+	        	//console.log(csvArray2);
+	            csvArray3[i + 1] = [temp[0], temp[5]|0, temp[6]|0];
+	        	//console.log(csvArray3);
+	            csvArray4[i + 1] = [temp[0], temp[7]|0];
+	        	//console.log(csvArray4);
+	        }
+	    }
+
+	    google.load("visualization", "1", {packages:["corechart"]});
+	    var resizable_chart1;
+	    var resizable_options1;
+	    var resizable_data1;
+	    var resizable_chart2;
+	    var resizable_options2;
+	    var resizable_data2;
+	    var resizable_chart3;
+	    var resizable_options3;
+	    var resizable_data3;
+	    var resizable_chart4;
+	    var resizable_options4;
+	    var resizable_data4;
+
+	    google.setOnLoadCallback(
+	        function () {
+	            resizable_data1 = google.visualization.arrayToDataTable(csvArray1);
+	            resizable_options1 = {
+	                title: 'Lab Temperature and CPU Temp',
+	                series:[
+	                    {targetAxisIndex:1},
+	                    {targetAxisIndex:0},
+	                ],
+                    vAxes: {
+                        0: {title: "CPU Temp('C)"},
+                        1: {title: "Lab Temp('C)"},
+                    },
+	                legend:{position:'top'},
+	                colors:['darkorange','tan'],
+	                pointSize: 2
+	            };
+	            resizable_chart1 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart1'));
+	            resizable_chart1.draw(resizable_data1, resizable_options1);
+
+	            resizable_data2 = google.visualization.arrayToDataTable(csvArray2);
+	            resizable_options2 = {
+	                title: 'Lab Atmospheric Pressure and Humidity',
+	                series:{
+	                    0: {targetAxisIndex:1},
+	                    1: {targetAxisIndex:0},
+	                },
+                    vAxes: {
+                        0: {title: 'hPa'},
+                        1: {title: '%'},
+                    },
+	                legend:{position:'top'},
+	                colors:['lightseagreen','deepskyblue'],
+	                pointSize: 2
+	            };
+	            resizable_chart2 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart2'));
+	            resizable_chart2.draw(resizable_data2, resizable_options2);
+
+	            resizable_data3 = google.visualization.arrayToDataTable(csvArray3);
+	            resizable_options3 = {
+	                title: 'Lab Internet Speed Test',
+	                series:[
+	                    {targetAxisIndex:1},
+	                    {targetAxisIndex:0},
+	                ],
+                    vAxes: {
+                        0: {title: 'Upload(Mbps)'},
+                        1: {title: 'Download(Mbps)'},
+                    },
+	                legend:{position:'top'},
+	                colors:['DeepPink','RoyalBlue'],
+	                pointSize: 2
+	            };
+	            resizable_chart3 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart3'));
+	            resizable_chart3.draw(resizable_data3, resizable_options3);
+
+	            resizable_data4 = google.visualization.arrayToDataTable(csvArray4);
+	            resizable_options4 = {
+	                title: 'Lab Internet Ping Test',
+	                series:[
+	                    {targetAxisIndex:0},
+	                ],
+                    vAxes: {
+                        0: {title: 'Ping(ms)'},
+                    },
+	                legend:{position:'top'},
+	                colors:['lightseagreen'],
+	                pointSize: 2
+	            };
+	            resizable_chart4 = new google.visualization.LineChart(document.getElementById('gct_resizable_chart4'));
+	            resizable_chart4.draw(resizable_data4, resizable_options4);
+	        }
+	    );
+    -->
+    </script>
+</head>
+<body onresize="resizable_chart1.draw(resizable_data1, resizable_options1);resizable_chart2.draw(resizable_data2, resizable_options2);resizable_chart3.draw(resizable_data3, resizable_options3);resizable_chart4.draw(resizable_data4, resizable_options4);">
+    <div id='gct_resizable_chart1' style="width=100%; height=500pt"></div>
+    <div id='gct_resizable_chart2' style="width=100%; height=500pt"></div>
+    <div id='gct_resizable_chart3' style="width=100%; height=500pt"></div>
+    <div id='gct_resizable_chart4' style="width=100%; height=500pt"></div>
+</body>
+</html>
