@@ -135,7 +135,7 @@ def main_core():
             halfhour_count2 = 1
             update_write_csv()
 
-        #print(get_chart_information())
+        # print(get_chart_information())
         time.sleep(0.2)
 
 
@@ -143,7 +143,7 @@ def main_core():
 # Hot all information
 
 def write_now_txt():
-    fs = open("/var/log/oledclockservice.txt","w")
+    fs = open("/var/log/oledclockservice.txt", "w")
     fs.write(get_all_information())
     fs.close()
 
@@ -159,20 +159,21 @@ def get_all_information():
 # Save the csv
 
 def update_write_csv():
-    update_write_thread = threading.Thread(target=write_csv, name="UpdateWriteThread")
+    update_write_thread = threading.Thread(
+        target=write_csv, name="UpdateWriteThread")
     update_write_thread.start()
 
 
 def write_csv():
-    fs = open("/var/www/oledclockservice.csv","a+")
-    
+    fs = open("/var/www/oledclockservice.csv", "a+")
+
     read = []
     for line in fs:
         read.append(line)
     read.append(get_chart_information())
     fs.close()
 
-    fs = open("/var/www/oledclockservice.csv","w+")
+    fs = open("/var/www/oledclockservice.csv", "w+")
     fs.seek(0, 0)
     for i, w in enumerate(read):
         if len(read) > 24 * 2 * 7:
@@ -202,10 +203,13 @@ def get_clock_csv():
 # Getting various information
 
 WeekNameString = ["Mon.", "Tue.", "Wed.", "Thu.", "Fri.", "Sat.", "Sun."]
+
+
 def get_clock():
     global WeekNameString
     now = datetime.datetime.today()
     return now.strftime("%m/%d ") + WeekNameString[now.weekday()] + " " + now.strftime("%H:%M:%S")
+
 
 def update_clock():
     clock = get_clock()
@@ -229,7 +233,8 @@ def update_cpu_temperatur_status():
 
 
 def update_ntp_status_thread():
-    update_status_thread = threading.Thread(target=update_ntp_status, name="UpdateStatusThread")
+    update_status_thread = threading.Thread(
+        target=update_ntp_status, name="UpdateStatusThread")
     update_status_thread.start()
 
 
@@ -237,7 +242,7 @@ def update_ntp_status():
     ntp = ""
     for line in execute_command('ntpq -p'):
         if line.find('*') >= 0:
-            ntp = "NTP: " + line.split(' ')[0][1:] # <= ntp server string
+            ntp = "NTP: " + line.split(' ')[0][1:]  # <= ntp server string
 
     if ntp == "":
         ntp = "NTP: NG"
@@ -247,7 +252,8 @@ def update_ntp_status():
 
 
 def update_speedtest_thread():
-    update_speed_thread = threading.Thread(target=update_speedtest, name="UpdateSpeedTestThread")
+    update_speed_thread = threading.Thread(
+        target=update_speedtest, name="UpdateSpeedTestThread")
     update_speed_thread.start()
 
 
@@ -264,12 +270,12 @@ def update_speedtest():
         if line.find(' ms') >= 0:
             index1 = line.find(']: ') + 3
             index2 = line.find(' ms')
-            ping = "Ping: " + line[index1 : index2] + "ms"
+            ping = "Ping: " + line[index1: index2] + "ms"
             global SpeedTestPingString
             SpeedTestPingString = ping
-            
-    #print(speed)
-    #print(ping)
+
+    # print(speed)
+    # print(ping)
 
 
 def execute_command(cmd):
@@ -296,6 +302,7 @@ OLED_D7 = 18
 WRITE_MODE_CHR = True
 WRITE_MODE_CMD = False
 
+
 def initialize_gpio():
     GPIO.setwarnings(False)
     # Use BCM GPIO numbers
@@ -314,6 +321,8 @@ def initialize_gpio():
     GPIO.output(OLED_D7, False)
 
 # ws0010 4bit mode initialized
+
+
 def initialize_winstar_oled():
     time.sleep(0.5)
 
@@ -325,30 +334,30 @@ def initialize_winstar_oled():
     set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)
 
     # Function set
-    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # start?
-    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # 0 0 1 DL (4bit mode)
-    set4_bit(1, 0, 0, 0, WRITE_MODE_CMD) # N F FT1 FT0 (2line?, 5x8dot, english-japanese font)
-    time.sleep(0.1) # Instead of BUSY check
+    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD)  # start?
+    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD)  # 0 0 1 DL (4bit mode)
+    set4_bit(1, 0, 0, 0, WRITE_MODE_CMD)  # N F FT1 FT0 (2line?, 5x8dot, english-japanese font)
+    time.sleep(0.1)  # Instead of BUSY check
 
     # Displey mode
-    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD) # 0 0 0 0
-    set4_bit(1, 1, 0, 0, WRITE_MODE_CMD) # 1 D C B (Disp on, Cursor off, Blink off)
-    time.sleep(0.1) # Instead of BUSY check
+    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)  # 0 0 0 0
+    set4_bit(1, 1, 0, 0, WRITE_MODE_CMD)  # 1 D C B (Disp on, Cursor off, Blink off)
+    time.sleep(0.1)  # Instead of BUSY check
 
     # Displey clear
-    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD) # 0 0 0 0
-    set4_bit(0, 0, 0, 1, WRITE_MODE_CMD) # 0 0 0 1
-    time.sleep(0.1) # Instead of BUSY check
+    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)  # 0 0 0 0
+    set4_bit(0, 0, 0, 1, WRITE_MODE_CMD)  # 0 0 0 1
+    time.sleep(0.1)  # Instead of BUSY check
 
     # Return home
-    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD) # 0 0 0 0
-    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD) # 0 0 1 0
-    time.sleep(0.1) # Instead of BUSY check
+    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)  # 0 0 0 0
+    set4_bit(0, 0, 1, 0, WRITE_MODE_CMD)  # 0 0 1 0
+    time.sleep(0.1)  # Instead of BUSY check
 
     # Entry mode set
-    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD) # 0 0 0 0
-    set4_bit(0, 1, 1, 0, WRITE_MODE_CMD) # 0 1 I/D S (Inclemental, not shift)
-    time.sleep(0.1) # Instead of BUSY check
+    set4_bit(0, 0, 0, 0, WRITE_MODE_CMD)  # 0 0 0 0
+    set4_bit(0, 1, 1, 0, WRITE_MODE_CMD)  # 0 1 I/D S (Inclemental, not shift)
+    time.sleep(0.1)  # Instead of BUSY check
 
 
 def write_line(message, line):
@@ -376,9 +385,11 @@ def clear_display():
 
 def write_character(bits, mode):
     # High bits
-    set4_bit(bits & 0x80 == 0x80, bits & 0x40 == 0x40, bits & 0x20 == 0x20, bits & 0x10 == 0x10, mode)
+    set4_bit(bits & 0x80 == 0x80, bits & 0x40 == 0x40,
+             bits & 0x20 == 0x20, bits & 0x10 == 0x10, mode)
     # Low bits
-    set4_bit(bits & 0x08 == 0x08, bits & 0x04 == 0x04, bits & 0x02 == 0x02, bits & 0x01 == 0x01, mode)
+    set4_bit(bits & 0x08 == 0x08, bits & 0x04 == 0x04,
+             bits & 0x02 == 0x02, bits & 0x01 == 0x01, mode)
 
 
 def set4_bit(d7, d6, d5, d4, mode):
@@ -415,6 +426,7 @@ I2cCaribTemp = []
 I2cCaribPress = []
 I2cCaribHumi = []
 I2cCaribFine = 0.0
+
 
 def initialize_bme280():
     osrs_t = 1  # Temperature oversampling x 1
@@ -507,7 +519,8 @@ def get_atmospheric_pressure(data):
     v2 = (((v1 / 4.0) * (v1 / 4.0)) / 2048) * I2cCaribPress[5]
     v2 = v2 + ((v1 * I2cCaribPress[4]) * 2.0)
     v2 = (v2 / 4.0) + (I2cCaribPress[3] * 65536.0)
-    v1 = (((I2cCaribPress[2] * (((v1 / 4.0) * (v1 / 4.0)) / 8192)) / 8) + ((I2cCaribPress[1] * v1) / 2.0)) / 262144
+    v1 = (((I2cCaribPress[2] * (((v1 / 4.0) * (v1 / 4.0)) / 8192)
+            ) / 8) + ((I2cCaribPress[1] * v1) / 2.0)) / 262144
     v1 = ((32768 + v1) * I2cCaribPress[0]) / 32768
 
     if v1 == 0:
@@ -520,7 +533,8 @@ def get_atmospheric_pressure(data):
     else:
         pressure = (pressure / v1) * 2
 
-    v1 = (I2cCaribPress[8] * (((pressure / 8.0) * (pressure / 8.0)) / 8192.0)) / 4096
+    v1 = (I2cCaribPress[8] * (((pressure / 8.0)
+                               * (pressure / 8.0)) / 8192.0)) / 4096
     v2 = ((pressure / 4.0) * I2cCaribPress[7]) / 8192.0
     pressure = pressure + ((v1 + v2 + I2cCaribPress[6]) / 16.0)
 
@@ -530,7 +544,8 @@ def get_atmospheric_pressure(data):
 def get_temperature(data):
     global I2cCaribFine
     v1 = (data / 16384.0 - I2cCaribTemp[0] / 1024.0) * I2cCaribTemp[1]
-    v2 = (data / 131072.0 - I2cCaribTemp[0] / 8192.0) * (data / 131072.0 - I2cCaribTemp[0] / 8192.0) * I2cCaribTemp[2]
+    v2 = (data / 131072.0 - I2cCaribTemp[0] / 8192.0) * (
+        data / 131072.0 - I2cCaribTemp[0] / 8192.0) * I2cCaribTemp[2]
     I2cCaribFine = v1 + v2
     temperature = I2cCaribFine / 5120.0
     return str("%4.1f" % temperature) + "'C "

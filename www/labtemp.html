@@ -16,7 +16,6 @@
 	<div id="ping" style="padding:4px;"></div>
 
 	<script type="text/javascript">
-		//process.env.TZ = 'Asia/Tokyo';
 		function createArray(csvData) {
 			var result = new Object();
 			result.labTemp = [];
@@ -27,18 +26,18 @@
 			result.labNetUpload = [];
 			result.labPing = [];
 
-			var tempArray = csvData.split("\n");
-			for (var i = 0; i < tempArray.length - 1; i++) {
-				var temp = tempArray[i].split(",")
-				var dayDateAllay = temp[0].replace("'",'').replace("'",'').split(/[// :]/);
-				var date = new Date(dayDateAllay[0], dayDateAllay[1]-1, dayDateAllay[2], dayDateAllay[3], dayDateAllay[4], dayDateAllay[5]);
-				result.labTemp[i] = [Number(date), Number(temp[1])];
-				result.labHumidity[i] = [Number(date), Number(temp[2])];
-				result.labPressure[i] = [Number(date), Number(temp[3])];
-				result.cpuTemp[i] = [Number(date), Number(temp[4])];
-				result.labNetDownload[i] = [Number(date), Number(temp[5])];
-				result.labNetUpload[i] = [Number(date), Number(temp[6])];
-				result.labPing[i] = [Number(date), Number(temp[7])];
+			var readLines = csvData.split("\n");
+			for (var i = 0; i < readLines.length - 1; i++) {
+				var line = readLines[i].split(",")
+				var dayDateAllay = line[0].replace("'", '').replace("'", '').split(/[// :]/);
+				var date = new Date(dayDateAllay[0], dayDateAllay[1] - 1, dayDateAllay[2], dayDateAllay[3], dayDateAllay[4], dayDateAllay[5]);
+				result.labTemp[i] = [Number(date), Number(line[1])];
+				result.labHumidity[i] = [Number(date), Number(line[2])];
+				result.labPressure[i] = [Number(date), Number(line[3])];
+				result.cpuTemp[i] = [Number(date), Number(line[4])];
+				result.labNetDownload[i] = [Number(date), Number(line[5])];
+				result.labNetUpload[i] = [Number(date), Number(line[6])];
+				result.labPing[i] = [Number(date), Number(line[7])];
 			}
 
 			return result;
