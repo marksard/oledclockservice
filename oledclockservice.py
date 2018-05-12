@@ -3,31 +3,11 @@
 # Product: Multi information clock
 # Author: marksard
 # Version: 4
-# Require Device: Raspberry pi 1 Model B+ or later.
+# Require Device: Raspberry PI 1 Model B+ or later.
 #                 Temperature and humidiry sensor BME280
 #                   datasheet (http://akizukidenshi.com/download/ds/bosch/BST-BME280_DS001-10.pdf)
 #                 WinSTAR OLED Display 20x4 WEH002004A (using controller WS0010)
 #                   datasheet (http://blog.digit-parts.com/pdf/ws0010.pdf)
-
-
-# ***************************
-# The wiring for the WinSTAR OLED is as follows:
-# 1 : GND
-# 2 : 5V
-# 3 : NC
-# 4 : RS (Register Select)
-# 5 : R/W (Read Write)           - TO GND
-# 6 : Enable or Strobe
-# 7 : Data Bit 0             - NOT USED
-# 8 : Data Bit 1             - NOT USED
-# 9 : Data Bit 2             - NOT USED
-# 10: Data Bit 3             - NOT USED
-# 11: Data Bit 4
-# 12: Data Bit 5
-# 13: Data Bit 6
-# 14: Data Bit 7
-# 15: NC
-# 16: NC
 
 
 # ***************************
@@ -289,8 +269,26 @@ def execute_command(cmd):
 
 # ***************************
 # GPIO (WinSTAR OLED Display) settings
+# The wiring for the WinSTAR OLED is as follows:
+# 1 : GND
+# 2 : 5V
+# 3 : NC
+# 4 : RS (Register Select)
+# 5 : R/W (Read Write)       - TO GND (It doesn't wired by WinSTAR 20x4 model.)
+# 6 : Enable or Strobe
+# 7 : Data Bit 0             - NOT USED
+# 8 : Data Bit 1             - NOT USED
+# 9 : Data Bit 2             - NOT USED
+# 10: Data Bit 3             - NOT USED
+# 11: Data Bit 4
+# 12: Data Bit 5
+# 13: Data Bit 6
+# 14: Data Bit 7
+# 15: NC
+# 16: NC
 
-# GPIO to OLED mapping
+# Relationship wiring between GPIO pin and OLED pin.
+# Pin position of OLED seen from RaspberryPi.
 OLED_RS = 7
 OLED_E = 8
 OLED_D4 = 25
@@ -320,10 +318,10 @@ def initialize_gpio():
     GPIO.output(OLED_D6, False)
     GPIO.output(OLED_D7, False)
 
-# ws0010 4bit mode initialized
 
 
 def initialize_winstar_oled():
+    # ws0010 4bit mode initialized
     time.sleep(0.5)
 
     # Synchronization function for an 4-bit use
@@ -362,28 +360,28 @@ def initialize_winstar_oled():
 
 def write_line(message, line):
     message = message.ljust(WRITE_LINE_WIDTH, " ")
-    write_character(line, WRITE_MODE_CMD)
+    set_8bit(line, WRITE_MODE_CMD)
     for i in range(WRITE_LINE_WIDTH):
-        write_character(ord(message[i]), WRITE_MODE_CHR)
+        set_8bit(ord(message[i]), WRITE_MODE_CHR)
 
 
 def clear_line(line):
-    write_character(line, WRITE_MODE_CMD)
+    set_8bit(line, WRITE_MODE_CMD)
     for _ in range(WRITE_LINE_WIDTH):
-        write_character(0, WRITE_MODE_CHR)
+        set_8bit(0, WRITE_MODE_CHR)
 
 
 def fill_line(fill, line):
-    write_character(line, WRITE_MODE_CMD)
+    set_8bit(line, WRITE_MODE_CMD)
     for _ in range(WRITE_LINE_WIDTH):
-        write_character(fill, WRITE_MODE_CHR)
+        set_8bit(fill, WRITE_MODE_CHR)
 
 
 def clear_display():
-    write_character(0x01, WRITE_MODE_CMD)
+    set_8bit(0x01, WRITE_MODE_CMD)
 
 
-def write_character(bits, mode):
+def set_8bit(bits, mode):
     # High bits
     set4_bit(bits & 0x80 == 0x80, bits & 0x40 == 0x40,
              bits & 0x20 == 0x20, bits & 0x10 == 0x10, mode)
