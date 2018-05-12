@@ -48,13 +48,6 @@ SpeedTestPingString = ""
 # ***************************
 
 def main():
-    initialize_bme280()
-    initialize_gpio()
-    initialize_winstar_oled()
-    main_core()
-
-
-def main_core():
     sec1_count = 1
     sec10_count = 1
     sec3_count = 1
@@ -573,6 +566,9 @@ def get_humidity(data):
 
 if __name__ == '__main__':
     try:
+        initialize_bme280()
+        initialize_gpio()
+        initialize_winstar_oled()
         main()
     except KeyboardInterrupt:
         pass

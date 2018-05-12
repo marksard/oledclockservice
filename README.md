@@ -18,8 +18,10 @@ Display contents are:
     * python 2.7 or later. (with some library is use)
 * BME280 Temperature and humidiry sensor
     * [datasheet](http://akizukidenshi.com/download/ds/bosch/BST-BME280_DS001-10.pdf)
-* WinSTAR OLED Display 20x4 WEH002004A (using controller WS0010)
-    * [datasheet](http://blog.digit-parts.com/pdf/ws0010.pdf)
+* WinSTAR OLED Display 20x4 WEH002004A
+    * [WinSTAR page](https://www.winstar.com.tw/products/oled-module/oled-character-display/oled-20x4.html)
+    * [OLED datasheet](https://www.winstar.com.tw/uploads/files/6eb7552c6c9c656f690c8206dc964e19.pdf)
+    * [controller WS0010 datasheet](http://blog.digit-parts.com/pdf/ws0010.pdf)
 
 
 ### Software
