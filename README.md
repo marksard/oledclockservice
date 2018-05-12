@@ -13,9 +13,25 @@ Display contents are:
 
 ## Require
 
+### Hardware
 * Raspberry pi 1 Model B+ or later.
     * python 2.7 or later. (with some library is use)
 * BME280 Temperature and humidiry sensor
     * [datasheet](http://akizukidenshi.com/download/ds/bosch/BST-BME280_DS001-10.pdf)
 * WinSTAR OLED Display 20x4 WEH002004A (using controller WS0010)
     * [datasheet](http://blog.digit-parts.com/pdf/ws0010.pdf)
+
+
+### Software
+* Python2.7 or later
+
+You need to install the following:
+```
+pip install pytz
+pip install psutil
+
+sudo apt install -y python3-smbus
+sudo apt install -y speedtest-cli
+sudo apt install -y ntp
+```
+
