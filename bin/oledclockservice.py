@@ -410,6 +410,9 @@ def set4_bit(d7, d6, d5, d4, mode):
 
 # ***************************
 # I2C (BME280) Settings
+# This code is used by editing the following sample code.
+# https://github.com/SWITCHSCIENCE/samplecodes/tree/master/BME280
+
 I2cBusNumber = 1    # Maybe differeced by environment(0 or 1)
 I2cAddress = 0x76   # Maybe differeced by each devices
 I2cBusInstance = smbus.SMBus(I2cBusNumber)
