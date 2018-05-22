@@ -6,7 +6,7 @@ It is an application of watch using winSTAR's OLED display (20 × 4 character) a
 Display contents are:
 
 * Display of date and time
-* Display of temperature and humidiry (require BMW280 sensor)
+* Display of temperature and humidiry (require BME280 sensor)
 * Display of ntp server name
 * Display of cpu usage and cpu temperature
 * Display of internet speed (download / upload) and ping response
@@ -14,6 +14,7 @@ Display contents are:
 ## Require
 
 ### Hardware
+
 * Raspberry pi 1 Model B+ or later.
     * python 2.7 or later. (with some library is use)
 * BME280 Temperature and humidiry sensor
@@ -25,10 +26,12 @@ Display contents are:
 
 
 ### Software
+
 * Python2.7 or later
 
 You need to install the following:
-```
+
+```sh
 pip install pytz
 pip install psutil
 
@@ -36,4 +39,3 @@ sudo apt install -y python3-smbus
 sudo apt install -y speedtest-cli
 sudo apt install -y ntp
 ```
-
