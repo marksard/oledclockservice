@@ -1,0 +1,13 @@
+[Unit]
+Description=OLED Clock Service
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/marks/repo/oledclockservice/clock
+ExecStart=/usr/bin/python3 /home/marks/repo/oledclockservice/clock/main.py
+TimeoutStopSec=5
+StandardOutput=null
+
+[Install]
+WantedBy = multi-user.target
