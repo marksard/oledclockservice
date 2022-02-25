@@ -123,7 +123,7 @@ class BME280:
         v2 = ((pressure / 4.0) * self.__i2c_carib_press[7]) / 8192.0
         pressure = pressure + ((v1 + v2 + self.__i2c_carib_press[6]) / 16.0)
 
-        return f'{pressure / 100:3.0f}hPa'
+        return f'{pressure / 100:3.0f}'
 
 
     def __get_temperature(self, data: int) -> str:
@@ -132,7 +132,7 @@ class BME280:
             data / 131072.0 - self.__i2c_carib_temp[0] / 8192.0) * self.__i2c_carib_temp[2]
         self.__i2c_carib_fine = v1 + v2
         temperature = self.__i2c_carib_fine / 5120.0
-        return f"{temperature:4.1f}'C"
+        return f"{temperature:4.1f}"
 
 
     def __get_humidity(self, data: int) -> str:
@@ -150,4 +150,4 @@ class BME280:
         elif var_h < 0.0:
             var_h = 0.0
 
-        return f'{var_h:2.0f}%'
+        return f'{var_h:2.0f}'

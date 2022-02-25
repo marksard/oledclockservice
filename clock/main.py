@@ -28,7 +28,7 @@ import bigdigit
 disp = weh002004a.WEH002004A()
 sphere = bme280.BME280()
 
-def main():
+def main() ->  None:
     week_names = ['Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.', 'Sun.']
     disp_state = 0
     cpu_temp = get_cpu_temperatur_status()
@@ -68,7 +68,7 @@ def main():
             disp.fill_line(ord('-'), 1)
             # room temp
             temp, hum, pres = sphere.get_status()
-            disp.write_line(replace_temp_c(f'{temp} {hum} {pres}'), 2)
+            disp.write_line(replace_temp_c(f"{temp}'C {hum}% {pres}hPa"), 2)
             if now.second & 1 == 1:
                 # raspi temp
                 cpu = f'CPU: {psutil.cpu_percent():4.1f}% {cpu_temp}'
@@ -80,23 +80,23 @@ def main():
 
         time.sleep(0.2)
 
-def replace_temp_c(message: str):
+def replace_temp_c(message: str) -> str:
     return message.replace("'C", str(chr(0xdf) + 'C'))
 
 # ***************************
 # Getting various information
 
-def get_cpu_temperatur_status():
+def get_cpu_temperatur_status() -> str:
     for line in execute_command('vcgencmd measure_temp'):
         return line.replace('temp=', '')
 
 
-def get_ntp_status(status: Queue):
+def get_ntp_status(status: Queue) ->  None:
     th = threading.Thread(target=ntp_exec, args=[status])
     th.start()
 
 
-def ntp_exec(status: Queue):
+def ntp_exec(status: Queue) ->  None:
     ntp = ''
     for line in execute_command('ntpq -p'):
         if line.find('*') >= 0:
@@ -107,7 +107,7 @@ def ntp_exec(status: Queue):
     status.put(ntp)
 
 
-def execute_command(cmd):
+def execute_command(cmd) -> list:
     p = Popen(cmd.split(' '), stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
     return [s for s in out.decode('utf-8').split('\n') if s]
